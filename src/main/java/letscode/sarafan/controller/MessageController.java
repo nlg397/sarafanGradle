@@ -28,12 +28,6 @@ public class MessageController {
         return getMessage(id);
     }
 
-    private Map<String, String> getMessage(@PathVariable String id) {
-        return messages.stream().filter(message -> message.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
-    }
-
     // fetch('/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { text: 'Fourth message' } ) }).then(console.log)
     @PostMapping
     public Map<String, String> create(@RequestBody Map<String, String> message) {
@@ -56,5 +50,11 @@ public class MessageController {
     public void delete(@PathVariable String id) {
         Map<String, String> message = getMessage(id);
         messages.remove(message);
+    }
+
+    private Map<String, String> getMessage(@PathVariable String id) {
+        return messages.stream().filter(message -> message.get("id").equals(id))
+                .findFirst()
+                .orElseThrow(NotFoundException::new);
     }
 }
